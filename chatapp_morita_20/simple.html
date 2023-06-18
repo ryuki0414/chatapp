@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="utf-8">
+    <title>Chatアプリ</title>
+</head>
+
+<body>
+
+    <!-- コンテンツ表示画面 -->
+    <div>
+        <div>
+            名前: <input type="text" id="uname">
+        </div>
+        <div>
+            <textarea name="" id="text" cols="30" rows="10"></textarea>
+            <button id="send">送信</button>
+        </div>
+        <div id="output"></div>
+    </div>
+
+
+
+
+
+
+
+
+    <!--/ コンテンツ表示画面 -->
+
+
+
+    <!-- JQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <!-- JQuery -->
+
+
+    <!--** 以下Firebase **-->
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js";
+        // TODO: Add SDKs for Firebase products that you want to use
+        // https://firebase.google.com/docs/web/setup#available-libraries
+
+        import { getDatabase, ref, push, set, onChildAdded, remove, onChildRemoved }
+            from "https://cdnjs.cloudflare.com/ajax/libs/firebase/9.22.2/firebase-database.js";
+        //verを揃える例）9.22.2
+
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyA6rzkxIBfh4JQPMYPaRuiHU3KTKYgHCqg", 
+            //github提出時にアップロード市内
+            authDomain: "fir-demo-22ed1.firebaseapp.com",
+            projectId: "fir-demo-22ed1",
+            storageBucket: "fir-demo-22ed1.appspot.com",
+            messagingSenderId: "462486838084",
+            appId: "1:462486838084:web:923b4b52c385125cae9511"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+    
+        //real-time dbに接続する
+        const db = getDatabase(app);
+        const dbRef = ref(db,"chat");
+
+        //送信ボタンが押されたらデータDBに送信
+        $("#send").on("click", function(){
+            //保存したいデータのオブジェクトを作る
+            const msg = {
+                uname: $("#uname").val(),  //valは今の値を入手  
+                text: $("#text").val()
+            };
+            console.log(msg);
+
+            //新規のデータを送れる状態にセット
+            const newPostRef = push(dbRef);
+
+            //DBに値を送信
+            set(newPostRef, msg);
+        })
+
+    onChildAdded(dbRef, function(data){
+        //新しいデータが追加されたら
+        const msg = data.val();
+        const key = data.key;
+        $("#output").append(`<p>${msg.name}:${msg.text}</p>`)
+    });
+
+    //remove,onchildremoveでKeyを探して消せばいいのではないか
+
+    </script>
+
+
+
+
+
+
+
+
+
+
+
+</body>
+
+</html>

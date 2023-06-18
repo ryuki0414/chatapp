@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Object演習</title>
+</head>
+<body>
+<script>
+// オブジェクトの中身を取得してみる
+const post = {
+    title: "投稿タイトル",
+    text: "本文",
+    user: {
+        name: "ジーズ太郎",
+        email: "gstaro@example.com"
+    }
+};
+
+console.log(post.title);
+console.log(post.text);
+//ジーズ太郎を取り出す方法
+console.log(post.user.name);
+
+const user = {
+    name:"もりた",
+    age:26,
+    sex:"男性"
+}
+
+
+// const user = {"もりた",26,"男性"};
+console.log(user);
+user.hight = 178;
+console.log(user);
+user.hight = 180;
+console.log(user);
+
+// userの〇〇であると理解しやすい
+
+alert(user.name);
+//文字列形式まで分解しないと表示されない。
+
+</script>
+</body>
+</html>
